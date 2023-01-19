@@ -78,7 +78,9 @@ df['Answers'] = "1." + df.Answers
 df = df.dropna().reset_index().drop('index',axis=1)
 print(df[['Answers']].values[0][0])
 
+pprint.pprint("-=-=-=-=-= Begin generating embeddings -=-=-=-=-=")
 
-#pprint.pprint("-=-=-=-=-= Begin generating embeddings -=-=-=-=-=")
+document_embeddings = generate_embeddings.compute_doc_embeddings(df)
+print(document_embeddings)
 #df['embeddings'] = df.apply(generate_embeddings.compute_doc_embeddings, axis=1)
 #print(df[['embeddings']].values[0][0])

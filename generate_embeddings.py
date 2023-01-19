@@ -25,7 +25,7 @@ def compute_doc_embeddings(df: pd.DataFrame) -> dict[tuple[str, str], list[float
     Return a dictionary that maps between each embedding vector and the index of the row that it corresponds to.
     """
     return {
-        idx: get_embedding(r.content) for idx, r in df.iterrows()
+        idx: get_embedding(r.Content) for idx, r in df.iterrows()
     }
 
 

@@ -19,16 +19,25 @@ Type in 'Python: Select interpreter'
 Select the 'venv' environment
     If you miss this step, all requirements will install to the Python global environment, not venv.
 
+
+
 From a command line 'pip install --requirement requirements.txt'
+
 This will isntall all packages from the requirements.txt file
+
 Look in code explorer, under venv\LIB\site-packages
+
 You should see all of the packages
+
 If they are not there, then will have to go down the path of uninstalling each package individually from global.
+
 Then install correctly into the venv. 
+
 There is also an option to set Pythin to look in global, but not sure this is best idea. 
 
 
 Set the following values lines in GetWikiPage.py
+
 *****Please be sure to not save these values and push to Repo!!!*
     
     personal_access_token is your ADO token. Ensure it has read access for Wiki.
@@ -52,13 +61,19 @@ Set the following values lines in GetWikiPage.py
 
 
 From a command line simply run .\GetWikiPage.py
+
 The script will get the specified page and page content
+
 Submit to openAi to generate questions
+
 Submit questiosn to OpenAi to generate answers
 
 
 
 As of 1-19-2023, the script needs to be developed so that it can create
+
 embeddings. We should follow https://github.com/openai/openai-cookbook/blob/main/examples/Question_answering_using_embeddings.ipynb
+
 generate_embeddings.py is created, but currently not functional. 
+
 More learning is required to understand and make this code work in this project. 

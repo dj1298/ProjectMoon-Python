@@ -9,6 +9,7 @@ If this is not installed, then the 'Transformers' package will fail to build
 Clone repo
 Open folder in VS Code
 
+
 First, create a virtual environment for the script
 Open a terminal window and run 
     py -m venv venv
@@ -22,7 +23,10 @@ Select the 'venv' environment
 
 
 From a command line 'pip install --requirement requirements.txt'
-
+   *I did have an issue where packages would not install with access deny. 
+   if you hit this problem, open VS Code as Admin, or you can open a open a CMD prompt as Admin and install from there.
+   
+   
 This will isntall all packages from the requirements.txt file
 
 Look in code explorer, under venv\LIB\site-packages

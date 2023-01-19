@@ -1,24 +1,53 @@
 # ProjectMoon-Python
 Python script that uses Azure Dev Ops module to get Wiki Data to train OpenAI instance.
 
+
+You will need to install the Rust installer first https://www.rust-lang.org/tools/install
+If this is not installed, then the 'Transformers' package will fail to build
+
+
 Clone repo
-From a command line 'pip install'
-This will isntall all packages from teh requirements.txt file
+Open folder in VS Code
+
+First, create a virtual environment for the script
+Open a terminal window and run 
+    py -m venv venv
 
 
-set the following values lines in GetWikiPage.py
-personal_access_token is your ADO token. Ensure it has read access for Wiki.
-organization_url is the ADO Org URL.
-wiki_page_path is the 'path' to a specific page, all teh way to the page name. ex. "Microsoft Teams/Teams Media/Media Connectivity/Port Usage"
-openai.api_key is your own key from openai.com site
+Then go to View\Command pallete
+Type in 'Python: Select interpreter'
+Select the 'venv' environment
+    If you miss this step, all requirements will install to the Python global environment, not venv.
 
-personal_access_token = ''
+From a command line 'pip install --requirement requirements.txt'
+This will isntall all packages from the requirements.txt file
+Look in code explorer, under venv\LIB\site-packages
+You should see all of the packages
+If they are not there, then will have to go down the path of uninstalling each package individually from global.
+Then install correctly into the venv. 
+There is also an option to set Pythin to look in global, but not sure this is best idea. 
 
-organization_url = 'https://dev.azure.com/Supportability'
 
-wiki_page_path = "Microsoft Teams/Teams Media/Media Connectivity/Port Usage"
+Set the following values lines in GetWikiPage.py
+*****Please be sure to not save these values and push to Repo!!!*
+    
+    personal_access_token is your ADO token. Ensure it has read access for Wiki.
+    
+    organization_url is the ADO Org URL.
+    
+    wiki_page_path is the 'path' to a specific page, all teh way to the page name. ex. "Microsoft Teams/Teams Media/Media Connectivity/Port Usage"
 
-openai.api_key = ''
+    openai.api_key is your own key from openai.com site
+
+    
+    
+    personal_access_token = ''
+
+    organization_url = 'https://dev.azure.com/Supportability'
+
+    wiki_page_path = "Microsoft Teams/Teams Media/Media Connectivity/Port Usage"
+
+    openai.api_key = ''
 
 
 

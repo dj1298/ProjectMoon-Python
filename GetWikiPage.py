@@ -1,6 +1,8 @@
 from azure.devops.connection import Connection
 from msrest.authentication import BasicAuthentication
 from azure.devops.v6_0.wiki import WikiClient
+from dotenv import load_dotenv
+import os
 import pprint
 import numpy as np
 import pandas as pd
@@ -13,10 +15,11 @@ import token_utils
 
 
 # ADO Personal access token, ADO URL, OpenAI Key
-personal_access_token = ''
-organization_url = 'https://dev.azure.com/Supportability'
-wiki_page_path = "Microsoft Teams/Teams Media/Media Connectivity/Port Usage"
-openai.api_key = ''
+load_dotenv()
+personal_access_token = os.getenv('personal_access_token')
+organization_url = os.getenv('organization_url')
+wiki_page_path = os.getenv('wiki_page_path')
+openai.api_key = os.getenv('openai.api_key')
 
 
 # Create a connection to the org
@@ -81,6 +84,8 @@ print(df[['Answers']].values[0][0])
 pprint.pprint("-=-=-=-=-= Begin generating embeddings -=-=-=-=-=")
 
 document_embeddings = generate_embeddings.compute_doc_embeddings(df)
-print(document_embeddings)
+example_entry = list(document_embeddings.items())[0]
+print(f"{example_entry[0]} : {example_entry[1][:5]}... ({len(example_entry[1])} entries)")
+
 #df['embeddings'] = df.apply(generate_embeddings.compute_doc_embeddings, axis=1)
 #print(df[['embeddings']].values[0][0])

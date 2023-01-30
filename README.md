@@ -40,7 +40,7 @@ Then install correctly into the venv.
 There is also an option to set Pythin to look in global, but not sure this is best idea. 
 
 
-Set the following values lines in GetWikiPage.py
+Set the following values lines in .env file
 
 *****Please be sure to not save these values and push to Repo!!!*
     

@@ -40,7 +40,7 @@ Then install correctly into the venv.
 There is also an option to set Pythin to look in global, but not sure this is best idea. 
 
 
-Set the following values lines in .env file
+Set the following values lines in .env file. If this file doe snot exist, create it in the root directory.
 
 The git ignore file will prevent this .env file from being tracked in source control. 
     
@@ -50,17 +50,28 @@ The git ignore file will prevent this .env file from being tracked in source con
     
     wiki_page_path is the 'path' to a specific page, all teh way to the page name. ex. "Microsoft Teams/Teams Media/Media Connectivity/Port Usage"
 
-    openai.api_key is your own key from openai.com site
+    public_openai_api_key is your own key from openai.com site
 
     
     
+    #ADO Personal access token, ADO URL, OpenAI Key
     personal_access_token = ''
-
     organization_url = 'https://dev.azure.com/Supportability'
+    wiki_page_path = 'Microsoft Teams/Teams Media/Media Connectivity/Port Usage'
 
-    wiki_page_path = "Microsoft Teams/Teams Media/Media Connectivity/Port Usage"
+    # Azure OpenAI resources
+    # azure_openai_endpoint - The endpoint URL of your Azure OpenAI Resource.
+    # azure_openai_api_key - Azure openai key
+    # deployment-id - The name of your model deployment. You're required to first deploy a model before you can make calls
+    # api-version - This follows the YYYY-MM-DD format. Supported vesions - 2022-12-01
 
-    openai.api_key = ''
+    azure_openai_endpoint = 'https://projectmoonprod.openai.azure.com/'
+    azure_openai_api_key = ''
+    azure_openai_deployment_id = 'Davinci'
+    azure_openai_api_version = '2022-12-01'
+
+    # OpenAI resources
+    public_openai_api_key = ''
 
 
 

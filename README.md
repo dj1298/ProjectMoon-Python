@@ -42,7 +42,7 @@ There is also an option to set Pythin to look in global, but not sure this is be
 
 Set the following values lines in .env file
 
-*****Please be sure to not save these values and push to Repo!!!*
+The git ignore file will prevent this .env file from being tracked in source control. 
     
     personal_access_token is your ADO token. Ensure it has read access for Wiki.
     

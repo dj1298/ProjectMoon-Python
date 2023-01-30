@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 import openai
 
+import rest_azure_openai
 import generate_questions
 import generate_answers
 import generate_embeddings
@@ -19,7 +20,7 @@ load_dotenv()
 personal_access_token = os.getenv('personal_access_token')
 organization_url = os.getenv('organization_url')
 wiki_page_path = os.getenv('wiki_page_path')
-openai.api_key = os.getenv('openai.api_key')
+openai.api_key = os.getenv('public_openai_api_key')
 
 
 # Create a connection to the org
@@ -71,6 +72,9 @@ pprint.pprint("Wiki Page Path = " + df["WikiPagePath"][0])
 pprint.pprint("-=-=-=-=-= Begin generating questions -=-=-=-=-=")
 df['context'] = df["ADOUrl"] + "\n" + df["WikiPagePath"] + "\n\n" + df["Content"]
 df['Questions'] = df["Content"].apply(generate_questions.generate_questions)
+
+# To-Do - The newly added rest-azure_openai is now created. Need to test out using this 
+#df['Questions'] = df["Content"].apply(rest_azure_openai.create_completion)
 df['Questions'] = "1." + df.Questions
 print(df["Questions"].values[0:10])
 

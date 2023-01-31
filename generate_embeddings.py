@@ -43,7 +43,71 @@ def load_embeddings(fname: str) -> dict[tuple[str, str], list[float]]:
            (r.title, r.heading): [r[str(i)] for i in range(max_dim + 1)] for _, r in df.iterrows()
     }
 
-# Theese show how to call the above functions
+
+def vector_similarity(x: list[float], y: list[float]) -> float:
+    """
+    Returns the similarity between two vectors.
+    
+    Because OpenAI Embeddings are normalized to length 1, the cosine similarity is the same as the dot product.
+    """
+    return np.dot(np.array(x), np.array(y))
+
+def order_document_sections_by_query_similarity(query: str, contexts: dict[(str, str), np.array]) -> list[(float, (str, str))]:
+    """
+    Find the query embedding for the supplied query, and compare it against all of the pre-calculated document embeddings
+    to find the most relevant sections. 
+    
+    Return the list of document sections, sorted by relevance in descending order.
+    """
+    query_embedding = get_embedding(query)
+    
+    document_similarities = sorted([
+        (vector_similarity(query_embedding, doc_embedding), doc_index) for doc_index, doc_embedding in contexts.items()
+    ], reverse=True)
+    
+    return document_similarities
+
+
+def construct_prompt(question: str, context_embeddings: dict, df: pd.DataFrame) -> str:
+    MAX_SECTION_LEN = 2048
+    SEPARATOR = "\n* "
+    ENCODING = "cl100k_base"  # encoding for text-embedding-ada-002
+
+    encoding = tiktoken.get_encoding(ENCODING)
+    separator_len = len(encoding.encode(SEPARATOR))
+
+    f"Context separator contains {separator_len} tokens"
+    
+    """
+    Fetch relevant 
+    """
+    most_relevant_document_sections = order_document_sections_by_query_similarity(question, context_embeddings)
+    
+    chosen_sections = []
+    chosen_sections_len = 0
+    chosen_sections_indexes = []
+     
+    for _, section_index in most_relevant_document_sections:
+        # Add contexts until we run out of space.        
+        document_section = df.loc[section_index]
+        
+        chosen_sections_len += document_section.Tokens + separator_len
+        if chosen_sections_len > MAX_SECTION_LEN:
+            break
+            
+        chosen_sections.append(SEPARATOR + document_section.Content.replace("\n", " "))
+        chosen_sections_indexes.append(str(section_index))
+            
+    # Useful diagnostic information
+    print(f"Selected {len(chosen_sections)} document sections:")
+    print("\n".join(chosen_sections_indexes))
+    
+    header = """Answer the question as truthfully as possible using the provided context, and if the answer is not contained within the text below, say "I don't know."\n\nContext:\n"""
+    
+    return header + "".join(chosen_sections) + "\n\n Q: " + question + "\n A:"
+
+
+# These show how to call the above functions
 #document_embeddings = load_embeddings("https://cdn.openai.com/API/examples/data/olympics_sections_document_embeddings.csv")
 # ===== OR, uncomment the below line to recaculate the embeddings from scratch. ========
 # document_embeddings = compute_doc_embeddings(df)

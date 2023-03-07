@@ -6,17 +6,28 @@ import openai
 import pandas as pd
 import pickle
 import tiktoken
+import rest_azure_openai
 
 COMPLETIONS_MODEL = "text-davinci-003"
 EMBEDDING_MODEL = "text-embedding-ada-002"
 
 
 def get_embedding(text: str, model: str=EMBEDDING_MODEL) -> list[float]:
-    result = openai.Embedding.create(
-      model=model,
-      input=text
-    )
-    return result["data"][0]["embedding"]
+    
+    response = rest_azure_openai.create_embedding(str)
+    response_data = response.json()
+    return response_data['choices'][0]['text']
+
+    """
+    This code will use the public OpenAI instance
+    """
+    #result = openai.Embedding.create(
+    #  model=model,
+    #  input=text
+    #)
+    #return result["data"][0]["embedding"]
+    
+
 
 def compute_doc_embeddings(df: pd.DataFrame) -> dict[tuple[str, str], list[float]]:
     """

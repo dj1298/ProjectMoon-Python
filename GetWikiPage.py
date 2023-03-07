@@ -102,46 +102,47 @@ pprint.pprint("-=-=-=-=-= Begin generating answers -=-=-=-=-=")
 #df['Answers'] = df.apply(generate_answers.get_answers, axis=1)
 
 # This will use our Auzre OpenAI isntance
-df['Answers'] = df.apply(generate_answers.get_answers, axis=1)
+df['Answers'] = df.apply(rest_azure_openai.create_answers, axis=1)
 df['Answers'] = "1." + df.Answers
 df = df.dropna().reset_index().drop('index',axis=1)
 print(df[['Answers']].values[0][0])
 
 pprint.pprint("-=-=-=-=-= Current Rows in the data set -=-=-=-=-=")
-df = df.set_index(["Title", "Heading"])
+df = df.reset_index().set_index(["Title", "Heading"], drop=False)
 print(f"{len(df)} rows in the data.")
 print(df.sample(1))
 
+# code below here is now fully functional, needs work
+#commenting this out for now
+#pprint.pprint("-=-=-=-=-= Begin generating embeddings -=-=-=-=-=")
+# compute_doc_embeddings is currently set to call against OpenAi public instance
+#document_embeddings = generate_embeddings.compute_doc_embeddings(df)
 
-
-pprint.pprint("-=-=-=-=-= Begin generating embeddings -=-=-=-=-=")
-
-document_embeddings = generate_embeddings.compute_doc_embeddings(df)
-example_entry = list(document_embeddings.items())[0]
-print(f"{example_entry[0]} : {example_entry[1][:5]}... ({len(example_entry[1])} entries)")
+#example_entry = list(document_embeddings.items())[0]
+#print(f"{example_entry[0]} : {example_entry[1][:5]}... ({len(example_entry[1])} entries)")
 
 # To-Do - I do not think these are needed. Will delete once confirmed
 #df['embeddings'] = df.apply(generate_embeddings.compute_doc_embeddings, axis=1)
 #print(df[['embeddings']].values[0][0])
 
 #pprint.pprint("-=-=-=-=-= Embeddings Created -=-=-=-=-=")
-pprint.pprint("-=-=-=-=-=-=-=-=-=-=")
-pprint.pprint("-=-=-=-=-= Answer the question without Prompt Engineering -=-=-=-=-=")
-no_prompt_engineering_answer = rest_azure_openai.base_completion(args.question)
-print(no_prompt_engineering_answer)
+#pprint.pprint("-=-=-=-=-=-=-=-=-=-=")
+#pprint.pprint("-=-=-=-=-= Answer the question without Prompt Engineering -=-=-=-=-=")
+#no_prompt_engineering_answer = rest_azure_openai.base_completion(args.question)
+#print(no_prompt_engineering_answer)
 
-pprint.pprint("-=-=-=-=-= Answer the question with Prompt Engineering -=-=-=-=-=")
-prompt = generate_embeddings.construct_prompt(
-    args.question,
-    document_embeddings,
-    df
-)
+#pprint.pprint("-=-=-=-=-= Answer the question with Prompt Engineering -=-=-=-=-=")
+#prompt = generate_embeddings.construct_prompt(
+    #args.question,
+    #document_embeddings,
+    #df
+#)
 
-pprint.pprint("-=-=-=-=-=-=-=-=-=-=")
-pprint.pprint("-=-=-=-=-= Engineered prompt created -=-=-=-=-=")
-print("===\n", prompt)
-prompt_engineering_answer = rest_azure_openai.base_completion(args.question)
-pprint.pprint("-=-=-=-=-=-=-=-=-=-=")
-pprint.pprint("-=-=-=-=-= Engineered prompt created -=-=-=-=-=")
-print(prompt_engineering_answer)
+#pprint.pprint("-=-=-=-=-=-=-=-=-=-=")
+#pprint.pprint("-=-=-=-=-= Engineered prompt created -=-=-=-=-=")
+#print("===\n", prompt)
+#prompt_engineering_answer = rest_azure_openai.base_completion(args.question)
+#pprint.pprint("-=-=-=-=-=-=-=-=-=-=")
+#pprint.pprint("-=-=-=-=-= Engineered prompt created -=-=-=-=-=")
+#print(prompt_engineering_answer)
 

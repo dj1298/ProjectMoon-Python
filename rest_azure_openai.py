@@ -139,15 +139,29 @@ def base_completion(context):
 # input
 # user
 # To-Do - Need to complete REST call code
-def create_embedding(parameters):
+def create_embedding(text: str) -> list[float]:
     try:
-        response = requests.post(azure_openai_endpoint + 'openai/deployments/' + azure_openai_deployment + 
-        '/completions?api-version=' + azure_openai_version, 
-        data = {
-            "input":"",
-            "user":""
-        })
-        return(response)
+        headers = {
+            "api-key":azure_openai_api_key,
+            "Content-Type":"application/json"
+            }
+        payload = {
+            'model':'text-similarity-ada-001',
+            'prompt':f'{text}',
+            'temperature':0.5,
+            'max_tokens':1024,
+            'top_p':1,
+            'frequency_penalty':0,
+            'presence_penalty':0,
+            'stop':['\n\n']
+            }
+
+        response = requests.post(
+            aoai_url,
+            headers=headers, 
+            data=json.dumps(payload))
+        response_data = response.json()
+        return response_data['choices'][0]['text']
     except requests.exceptions.HTTPError as errh:
         return(errh)
     except requests.exceptions.ConnectionError as errc:

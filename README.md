@@ -37,10 +37,10 @@ If they are not there, then will have to go down the path of uninstalling each p
 
 Then install correctly into the venv. 
 
-There is also an option to set Pythin to look in global, but not sure this is best idea. 
+There is also an option to set Python to look in global, but not sure this is best idea. 
 
 
-Set the following values lines in .env file. If this file doe snot exist, create it in the root directory.
+Set the following values lines in .env file. If this file does not exist, create it in the root directory.
 
 The git ignore file will prevent this .env file from being tracked in source control. 
     
